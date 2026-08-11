@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Cute Gift For You 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-y: auto;
+      background: radial-gradient(circle at top, #ffdde8, #ffe9f2, #ffd1dc, #17001f);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    .font-love { font-family: 'Pacifico', cursive; }
+
+    .heart {
+      position: fixed;
+      bottom: -40px;
+      color: rgba(255, 70, 130, 0.8);
+      animation: floatHeart linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(-115vh) rotate(360deg) scale(1.8); opacity: 0; }
+    }
+
+    .sparkle {
+      position: fixed;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 15px white;
+      animation: sparkle 2s infinite ease-in-out;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 25px 60px rgba(121, 0, 65, 0.28);
+    }
+
+    /* Gift Box Base */
+    .gift-container {
+      position: relative;
+      width: 160px;
+      height: 140px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+    .gift-box {
+      width: 150px;
+      height: 110px;
+      background: linear-gradient(135deg, #ff3f8f, #ff8fb8);
+      border-radius: 18px;
+      position: absolute;
+      bottom: 0;
+      left: 5px;
+      box-shadow: 0 20px 45px rgba(255, 45, 130, .45);
+      z-index: 10;
+      animation: bounceGift 1.5s infinite;
+    }
+    .gift-box::before {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 110px;
+      background: #fff4b8;
+      left: 61px;
+      top: 0;
+    }
+    .gift-box::after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 28px;
+      background: #fff4b8;
+      left: 0;
+      top: 40px;
+    }
+    .gift-lid {
+      width: 170px;
+      height: 35px;
+      background: linear-gradient(135deg, #ff1f7a, #ff72aa);
+      border-radius: 16px;
+      position: absolute;
+      top: 0px;
+      left: -5px;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      z-index: 11;
+    }
+
+    .gift-container.open .gift-box {
+      animation: none;
+      display: none;
+    }
+    .gift-container.open .gift-lid {
+      transform: translateY(-90px) rotate(-35deg);
+      opacity: 0;
+      display: none;
+    }
+
+    #feedingGameArea {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .fruits-container {
+      position: relative;
+      width: 100%;
+      height: 130px;
+      margin-bottom: 10px;
+    }
+
+    .fruit-item {
+      position: absolute;
+      font-size: 32px;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      animation: floatFood 3s ease-in-out infinite alternate;
+      -webkit-touch-callout: none;
+      transition: transform 0.1s ease;
+    }
+
+    /* ১০টি খাবারের এলোমেলো পজিশন */
+    .fruit-item:nth-child(1)  { left: 4%;  top: 10px; animation-delay: 0s; }
+    .fruit-item:nth-child(2)  { left: 22%; top: 60px; animation-delay: 0.4s; }
+    .fruit-item:nth-child(3)  { left: 40%; top: 15px; animation-delay: 0.8s; }
+    .fruit-item:nth-child(4)  { left: 58%; top: 50px; animation-delay: 0.2s; }
+    .fruit-item:nth-child(5)  { left: 76%; top: 10px; animation-delay: 0.6s; }
+    .fruit-item:nth-child(6)  { left: 10%; top: 75px; animation-delay: 1s; }
+    .fruit-item:nth-child(7)  { left: 30%; top: 50px; animation-delay: 0.3s; }
+    .fruit-item:nth-child(8)  { left: 48%; top: 75px; animation-delay: 0.7s; }
+    .fruit-item:nth-child(9)  { left: 66%; top: 40px; animation-delay: 0.5s; }
+    .fruit-item:nth-child(10) { left: 84%; top: 70px; animation-delay: 0.9s; }
+
+    @keyframes floatFood {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .fruit-item:active {
+      cursor: grabbing;
+    }
+    .fruit-item.hidden {
+      display: none;
+    }
+
+    .character-container {
+      position: relative;
+      margin: 10px auto 5px auto;
+      width: 160px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .character-media {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 20px;
+      border: 3px solid #ffffff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .balloon {
+      position: absolute;
+      width: 60px;
+      height: 78px;
+      border-radius: 50% 50% 45% 45%;
+      animation: balloonFloat 4s ease-in-out infinite;
+      z-index: 0;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 90px;
+      background: rgba(255,255,255,.6);
+      left: 50%;
+      top: 76px;
+    }
+    @keyframes balloonFloat {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-28px) rotate(4deg); }
+    }
+    @keyframes bounceGift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      animation: confettiFall 3s linear forwards;
+      z-index: 40;
+    }
+    @keyframes confettiFall {
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 text-black relative">
+
+  <!-- Background Balloons -->
+  <div class="balloon bg-pink-400 left-8 top-20"></div>
+  <div class="balloon bg-purple-400 right-10 top-28" style="animation-delay:1s"></div>
+  <div class="balloon bg-yellow-300 left-1/4 bottom-16" style="animation-delay:2s"></div>
+  <div class="balloon bg-red-400 right-1/4 bottom-20" style="animation-delay:.5s"></div>
+
+  <main class="relative z-10 w-full max-w-xl">
+    <div class="glass rounded-[2rem] p-6 sm:p-10 text-center min-h-[580px] flex flex-col items-center justify-center relative overflow-hidden">
+      
+      <h2 id="mainHeading" class="font-love text-4xl sm:text-5xl mb-2 text-black transition-all">A Gift For You 🎁</h2><br>
+      <p id="instructionText" class="mb-10 text-black/80 text-sm sm:text-base">Tap the gift box to open!</p>
+
+      <!-- Gift Container -->
+      <div class="gift-container relative mb-12" id="giftWrapper" onclick="openGift()">
+        <div class="gift-lid"></div>
+        <div class="gift-box"></div>
+      </div>
+
+      <!-- Feeding Mini-Game Area -->
+      <div id="feedingGameArea">
+        <p id="feedingTitle" class="text-pink-600 font-love text-2xl mb-2">মনে কর এইডা তুই !😒</p>
+        <p id="feedingSub" class="text-gray-700 text-xs sm:text-sm mb-2 font-medium">Drag the 10 items to your mouth!</p>
+
+        <!-- 10 Scattered Foods List -->
+        <div class="fruits-container" id="fruitsList">
+          <div class="fruit-item" data-id="1">🍲</div>
+          <div class="fruit-item" data-id="2">🥭</div>
+          <div class="fruit-item" data-id="3">🍛</div>
+          <div class="fruit-item" data-id="4">🍉</div>
+          <div class="fruit-item" data-id="5">🍡</div>
+          <div class="fruit-item" data-id="6">🫔</div>
+          <div class="fruit-item" data-id="7">🍌</div>
+          <div class="fruit-item" data-id="8">🧋</div>
+          <div class="fruit-item" data-id="9">🍓</div>
+          <div class="fruit-item" data-id="10">🥥</div>
+        </div>
+
+        <!-- Character Drop Zone -->
+        <div class="character-container" id="characterDropZone">
+          <img id="characterImg" src="images/emoji.png" alt="Character" class="character-media" />
+          <video id="characterVideo" src="Video/gift.mp4" class="character-media hidden" muted playsinline preload="auto"></video>
+          
+          <!-- নাম এবং কাউন্ট সেকশন -->
+          <div class="mt-2 text-center">
+            <h3 class="text-pink-600 font-bold text-base tracking-wide">Moon</h3>
+            <p class="text-xs text-gray-700 font-bold"><span id="fedCount">0</span>/10 Fed 😋</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Letter Content -->
+      <div id="noteBox" class="hidden max-w-md bg-white/50 border border-white p-6 rounded-3xl shadow-2xl z-40 transform transition-all duration-700 scale-95 opacity-0">
+        <p class="font-love text-pink-600 text-3xl mb-2">Funny Note! 🥴</p>
+        <p class="text-gray-800 text-sm sm:text-base font-medium leading-relaxed mb-4">
+          আসল দুনিয়ায় তো তোক খাওয়াইতে পারলাম নাহ। নে এখানেই খাওয়াই দিলাম 😁
+        </p>
+        
+        <!-- Next Page Button with Music Storage -->
+        <a id="nextBtn" href="cake_4th.html" onclick="localStorage.setItem('birthdaySong', 'musics/cake.mp3')" class="inline-block bg-gradient-to-r from-pink-500 to-rose-500 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition">
+          Make A Wish & Blow Candle 🕯️
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    let isOpened = false;
+    let fedCount = 0;
+    const totalFruits = 10;
+
+    const characterImg = document.getElementById('characterImg');
+    const characterVideo = document.getElementById('characterVideo');
+
+    function openGift() {
+      if (isOpened) return;
+      isOpened = true;
+
+      document.getElementById('giftWrapper').classList.add('open');
+      document.getElementById('instructionText').textContent = "Surprise opened! Now feed her... 🌸✨";
+
+      launchConfetti(70);
+
+      setTimeout(() => {
+        document.getElementById('giftWrapper').style.display = 'none';
+        document.getElementById('instructionText').style.display = 'none';
+        document.getElementById('feedingGameArea').style.display = 'flex';
+      }, 1000);
+    }
+
+    const fruits = document.querySelectorAll('.fruit-item');
+    const dropZone = document.getElementById('characterDropZone');
+
+    fruits.forEach(fruit => {
+      let isDragging = false;
+      let startX = 0, startY = 0;
+      let initialX = 0, initialY = 0;
+
+      function dragStart(e) {
+        isDragging = true;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        startX = clientX;
+        startY = clientY;
+
+        const rect = fruit.getBoundingClientRect();
+        const parentRect = fruit.parentElement.getBoundingClientRect();
+
+        initialX = rect.left - parentRect.left;
+        initialY = rect.top - parentRect.top;
+
+        fruit.style.position = 'absolute';
+        fruit.style.left = initialX + 'px';
+        fruit.style.top = initialY + 'px';
+        fruit.style.zIndex = '1000';
+        fruit.style.animation = 'none';
+
+        playVideo();
+
+        if (e.type === 'touchstart') {
+          window.addEventListener('touchmove', dragMove, { passive: false });
+          window.addEventListener('touchend', dragEnd);
+        } else {
+          window.addEventListener('mousemove', dragMove);
+          window.addEventListener('mouseup', dragEnd);
+        }
+      }
+
+      function dragMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        fruit.style.left = (initialX + dx) + 'px';
+        fruit.style.top = (initialY + dy) + 'px';
+      }
+
+      function dragEnd(e) {
+        if (!isDragging) return;
+        isDragging = false;
+
+        if (e.type === 'touchend') {
+          window.removeEventListener('touchmove', dragMove);
+          window.removeEventListener('touchend', dragEnd);
+        } else {
+          window.removeEventListener('mousemove', dragMove);
+          window.removeEventListener('mouseup', dragEnd);
+        }
+
+        const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+
+        const dropRect = dropZone.getBoundingClientRect();
+
+        if (
+          clientX >= dropRect.left &&
+          clientX <= dropRect.right &&
+          clientY >= dropRect.top &&
+          clientY <= dropRect.bottom
+        ) {
+          feedFruit(fruit);
+        } else {
+          fruit.style.position = 'absolute';
+          fruit.style.left = '';
+          fruit.style.top = '';
+          fruit.style.zIndex = '1';
+          fruit.style.animation = 'floatFood 3s ease-in-out infinite alternate';
+          showImage();
+        }
+      }
+
+      fruit.addEventListener('touchstart', dragStart, { passive: false });
+      fruit.addEventListener('mousedown', dragStart);
+    });
+
+    function playVideo() {
+      characterImg.classList.add('hidden');
+      characterVideo.classList.remove('hidden');
+      characterVideo.currentTime = 0;
+      characterVideo.play().catch(e => console.log(e));
+    }
+
+    function showImage() {
+      characterVideo.pause();
+      characterVideo.classList.add('hidden');
+      characterImg.classList.remove('hidden');
+    }
+
+    function feedFruit(fruitElement) {
+      if (!fruitElement || fruitElement.classList.contains('hidden')) return;
+
+      fruitElement.classList.add('hidden');
+      fedCount++;
+      document.getElementById('fedCount').textContent = fedCount;
+
+      setTimeout(() => {
+        if (fedCount < totalFruits) {
+          showImage();
+        }
+      }, 400);
+
+      if (fedCount === totalFruits) {
+        playVideo();
+        setTimeout(showFinalNote, 600);
+      }
+    }
+
+    function showFinalNote() {
+      document.getElementById('feedingGameArea').style.display = 'none';
+      launchConfetti(90);
+
+      const note = document.getElementById('noteBox');
+      note.classList.remove('hidden');
+      
+      setTimeout(() => {
+        note.classList.remove('scale-95', 'opacity-0');
+        note.classList.add('scale-100', 'opacity-100');
+      }, 50);
+    }
+
+    function createFloatingHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = ['❤️','💖','💕','💗','💘'][Math.floor(Math.random() * 5)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (18 + Math.random() * 28) + 'px';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, 350);
+    }
+
+    function createSparkles() {
+      for (let i = 0; i < 35; i++) {
+        const sp = document.createElement('div');
+        sp.className = 'sparkle';
+        sp.style.left = Math.random() * 100 + 'vw';
+        sp.style.top = Math.random() * 100 + 'vh';
+        sp.style.animationDelay = Math.random() * 3 + 's';
+        document.body.appendChild(sp);
+      }
+    }
+
+    function launchConfetti(amount = 100) {
+      const colors = ['#ff4d94', '#fff176', '#7c4dff', '#00e5ff', '#ffffff', '#ff1744'];
+      for (let i = 0; i < amount; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDelay = Math.random() * 1.2 + 's';
+        c.style.animationDuration = (2 + Math.random() * 2.5) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4500);
+      }
+    }
+
+    createFloatingHearts();
+    createSparkles();
+  </script>
+</body>
+</html>

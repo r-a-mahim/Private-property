@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-y: auto;
+      background: radial-gradient(circle at top, #ffdde8, #ffe9f2, #ffd1dc, #17001f);
+      min-height: 100vh;
+    }
+    .font-love { font-family: 'Pacifico', cursive; }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 25px 60px rgba(121, 0, 65, 0.25);
+    }
+
+    /* ⭕ Circle Image */
+    .circle-img-container {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      padding: 3.5px;
+      background: linear-gradient(45deg, #ff416c, #ff4b2b, #ff69b4);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+      animation: pulseGlow 2.5s infinite alternate;
+      flex-shrink: 0;
+    }
+
+    .circle-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2.5px solid white;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1); box-shadow: 0 0 12px rgba(255, 105, 180, 0.4); }
+      100% { transform: scale(1.06); box-shadow: 0 0 30px rgba(255, 20, 147, 0.9); }
+    }
+
+    /* 🟥 Left Mini Box for Lyrics Container */
+    .empty-mini-box {
+      border: 2px solid #ff4d8d;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 16px;
+      padding: 8px 12px;
+      min-height: 85px;
+      width: 170px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating Hearts Animation */
+    .heart {
+      position: fixed;
+      bottom: -40px;
+      color: rgba(255, 70, 130, 0.8);
+      animation: floatHeart linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(-115vh) rotate(360deg) scale(1.8); opacity: 0; }
+    }
+
+    .sparkle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 12px white;
+      animation: sparkle 2s infinite ease-in-out;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    /* Envelope Styling */
+    .envelope-box {
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    .envelope-box:hover {
+      transform: scale(1.03);
+    }
+
+    /* Typewriter Cursor */
+    .typewriter-cursor::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+      color: #ff2a7a;
+      font-weight: bold;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Smooth Pop Animation for Card Open */
+    .modal-enter {
+      animation: popModal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes popModal {
+      from { opacity: 0; transform: scale(0.7) translateY(30px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Lyrics transition effect */
+    .lyrics-fade {
+      transition: opacity 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4 relative text-gray-800 min-h-screen">
+
+  <!-- Background Music Element -->
+  <audio id="bgMusic" loop src="musics/perfect.mp3"></audio>
+
+  <main class="relative z-10 w-full max-w-2xl my-auto">
+    
+    <!-- 1. Interactive Envelope (Initial View) -->
+    <div id="envelopeSection" class="envelope-box glass rounded-[2.5rem] p-8 sm:p-12 text-center flex flex-col items-center justify-center min-h-[420px]">
+      <div class="text-7xl mb-4 animate-bounce">💌</div>
+      <h2 class="font-love text-3xl sm:text-4xl text-pink-600 mb-3">You Have A Secret Letter</h2>
+      <p class="text-gray-700 text-sm sm:text-base font-medium mb-6">Tap the envelope to open your birthday message ✨</p>
+      <button onclick="openLetter()" class="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-8 py-3.5 rounded-full font-semibold shadow-lg hover:shadow-xl transition">
+        Open Letter ❤️
+      </button>
+    </div>
+
+    <!-- 2. Final Message Card (Hidden Initially) -->
+    <div id="cardSection" class="hidden glass rounded-[2.5rem] p-6 sm:p-10 text-center relative overflow-hidden transition-all duration-700 modal-enter">
+      
+      <!-- Top Layout: Left Box (Lyrics), Center Title & Cake, Right Circle Image -->
+      <div class="flex items-center justify-between w-full mb-4 px-1 gap-2">
+        
+        <!-- 🟥 Left Mini Box with Synchronized Full Song Lyrics -->
+        <div class="empty-mini-box">
+          <span class="text-[10px] text-pink-500 font-bold mb-0.5 tracking-wider">🎶 PERFECT</span>
+          <p id="lyricsBox" class="text-xs text-gray-700 font-medium text-center lyrics-fade px-1 opacity-0">
+            🎶
+          </p>
+        </div>
+
+        <!-- 🎂 Center Title & Cake -->
+        <div class="flex flex-col items-center text-center flex-grow px-2">
+          <h1 class="font-love text-3xl sm:text-4xl text-gray-900 drop-shadow-sm leading-tight">
+            Happy Birthday
+          </h1>
+          <div class="text-3xl mt-1 animate-pulse">🎂</div>
+        </div>
+
+        <!-- ⭕ Right Circle Image -->
+        <div class="circle-img-container">
+          <img src="images/moon.jpeg" alt="Special Memory">
+        </div>
+
+      </div>
+
+      <!-- Typewriter Letter Area -->
+      <div class="bg-white/40 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/60 shadow-inner mb-6 text-left sm:text-center">
+        <p id="typedText" class="text-gray-800 text-sm sm:text-base font-medium leading-relaxed sm:leading-loose typewriter-cursor min-h-[160px]">
+          <!-- Text will be typed dynamically -->
+        </p>
+      </div>
+
+      <!-- Locked Final Wish Button -->
+      <div class="flex items-center justify-center">
+        <a id="finalWishBtn" href="Surprise.html" class="hidden bg-white hover:bg-gray-50 text-pink-600 font-bold px-8 py-3 rounded-full shadow-lg text-sm transition flex items-center gap-2 border border-pink-200 fade-in-up">
+          ✨ Final wish 🥺
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    const fullMessage = "On your special day, I just want to say that you are one of the most beautiful blessings in my life. Your smile makes my world softer, your presence makes my heart peaceful, and your love makes every day feel special.\n\nMay Allah bless you with endless happiness, health, success, love, and every dream your heart silently prays for. I am so lucky to have you. ❤️";
+
+    const timedLyrics = [
+      { time: 2.0, text: "Baby, I'm dancin' in the dark with you between my arms" },
+      { time: 12.0, text: "Barefoot on the grass, listenin' to our favourite song" },
+      { time: 20.0, text: "When you said you looked a mess, I whispered underneath my breath" },
+      { time: 27.5, text: "But you heard it, \"Darling, you look perfect tonight\"" },
+      { time: 41.0, text: "Well, I found a woman, stronger than anyone I know" },
+      { time: 48.0, text: "She shares my dreams, I hope that someday, I'll share her home" },
+      { time: 55.0, text: "I found a love to carry more than just my secrets" },
+      { time: 65.0, text: "To carry love, to carry children of our own" },
+      { time: 70.0, text: "We are still kids, but we're so in love, fighting against all odds" },
+      { time: 79.0, text: "I know we'll be alright this time" },
+      { time: 86.0, text: "Darling, just hold my hand, be my girl, I'll be your man" },
+      { time: 93.0, text: "I see my future in your eyes" },
+      { time: 105.0, text: "Baby, I'm dancin' in the dark with you between my arms" },
+      { time: 117.0, text: "Barefoot on the grass, listenin' to our favourite song" },
+      { time: 124.0, text: "When I saw you in that dress, lookin' so beautiful" },
+      { time: 130.0, text: "I don't deserve this, darling, you look perfect tonight" },
+      { time: 144.0, text: "No, no, no / Mm-hm" },
+      { time: 151.0, text: "Baby, I'm dancin' in the dark with you between my arms" },
+      { time: 1611.0, text: "Barefoot on the grass, listenin' to our favourite song" },
+      { time: 1718.0, text: "I have faith in what I see, now I know I have met" },
+      { time: 1819.0, text: "An angel in person, and she looks perfect" },
+      { time: 1196.5, text: "I don't deserve this, you look perfect tonight ❤️" }
+    ];
+
+    let currentLyricIndex = -1;
+
+    document.getElementById('envelopeSection').addEventListener('click', openLetter);
+
+    function openLetter() {
+      // 1. Play Background Music
+      const audio = document.getElementById('bgMusic');
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log("Audio play error:", e));
+
+      // 2. Hide envelope & show letter card
+      document.getElementById('envelopeSection').classList.add('hidden');
+      const card = document.getElementById('cardSection');
+      card.classList.remove('hidden');
+
+      // 3. Start Typewriter Effect for the letter after 2 seconds
+      setTimeout(() => {
+        typeWriterEffect(fullMessage, 'typedText', 70);
+      }, 2000);
+
+      // 4. Track Audio Time to sync full lyrics precisely with the song
+      audio.addEventListener('timeupdate', () => {
+        const currentTime = audio.currentTime;
+        
+        let activeIndex = -1;
+        for (let i = 0; i < timedLyrics.length; i++) {
+          if (currentTime >= timedLyrics[i].time) {
+            activeIndex = i;
+          }
+        }
+
+        if (activeIndex !== -1 && activeIndex !== currentLyricIndex) {
+          currentLyricIndex = activeIndex;
+          updateLyricDisplay(timedLyrics[currentLyricIndex].text);
+        }
+      });
+    }
+
+    function updateLyricDisplay(newText) {
+      const box = document.getElementById('lyricsBox');
+      box.style.opacity = 0; // Fade out
+      setTimeout(() => {
+        box.textContent = newText;
+        box.style.opacity = 1; // Fade in
+      }, 300);
+    }
+
+    function typeWriterEffect(text, elementId, speed) {
+      let i = 0;
+      const elem = document.getElementById(elementId);
+      elem.innerHTML = "";
+
+      function type() {
+        if (i < text.length) {
+          if (text.charAt(i) === '\n') {
+            elem.innerHTML += '<br><br>';
+          } else {
+            elem.innerHTML += text.charAt(i);
+          }
+          i++;
+          setTimeout(type, speed);
+        } else {
+          elem.classList.remove('typewriter-cursor');
+          setTimeout(() => {
+            const btn = document.getElementById('finalWishBtn');
+            btn.classList.remove('hidden');
+          }, 400);
+        }
+      }
+      type();
+    }
+
+    // Background Animations
+    function createFloatingHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = ['❤️','💖','💕','💗','💘'][Math.floor(Math.random() * 5)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (18 + Math.random() * 28) + 'px';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, 350);
+    }
+
+    function createSparkles() {
+      for (let i = 0; i < 35; i++) {
+        const sp = document.createElement('div');
+        sp.className = 'sparkle';
+        sp.style.left = Math.random() * 100 + 'vw';
+        sp.style.top = Math.random() * 100 + 'vh';
+        sp.style.animationDelay = Math.random() * 3 + 's';
+        document.body.appendChild(sp);
+      }
+    }
+
+    createFloatingHearts();
+    createSparkles();
+  </script>
+</body>
+</html>

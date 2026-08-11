@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blow Candles & Cut Cake 🎂</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-y: auto;
+      background: radial-gradient(circle at top, #ffdde8, #ffe9f2, #ffd1dc, #17001f);
+    }
+    .font-love { font-family: 'Pacifico', cursive; }
+
+    .heart {
+      position: fixed;
+      bottom: -40px;
+      color: rgba(255, 70, 130, 0.8);
+      animation: floatHeart linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(-115vh) rotate(360deg) scale(1.8); opacity: 0; }
+    }
+
+    .sparkle {
+      position: fixed;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 15px white;
+      animation: sparkle 2s infinite ease-in-out;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 25px 60px rgba(121, 0, 65, 0.28);
+    }
+
+    /* Realistic Cake Styling */
+    .cake-container {
+      position: relative;
+      width: 250px;
+      height: 180px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+
+    .plate {
+      position: absolute;
+      bottom: 0;
+      left: -20px;
+      width: 290px;
+      height: 20px;
+      background: linear-gradient(to right, #e0e0e0, #ffffff, #d6d6d6);
+      border-radius: 50%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .cake-body {
+      position: absolute;
+      bottom: 12px;
+      left: 15px;
+      width: 220px;
+      height: 100px;
+      background: linear-gradient(180deg, #ff85b3, #ff3381);
+      border-radius: 20px 20px 10px 10px;
+      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.1), 0 10px 25px rgba(255, 51, 129, 0.3);
+      overflow-y: auto;
+      transition: all 0.5s ease;
+    }
+
+    /* Cream Dripping Details */
+    .cream-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 35px;
+      background: #ffffff;
+      border-radius: 20px 20px 50% 50%;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .cherries {
+      position: absolute;
+      top: 4px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 20px;
+      font-size: 18px;
+    }
+
+    /* 3 Candles Positioning */
+    .candle {
+      position: absolute;
+      bottom: 105px;
+      width: 14px;
+      height: 42px;
+      background: repeating-linear-gradient(45deg, #fff, #fff 5px, #4dabf7 5px, #4dabf7 10px);
+      border-radius: 6px;
+      z-index: 10;
+    }
+    .candle-1 { left: 65px; }
+    .candle-2 { left: 118px; }
+    .candle-3 { left: 171px; }
+
+    .flame {
+      position: absolute;
+      bottom: 145px;
+      width: 16px;
+      height: 26px;
+      background: radial-gradient(circle, #fff7a1 20%, #ffb300 60%, #ff4d00 100%);
+      border-radius: 50% 50% 50% 50%;
+      animation: flame 0.3s infinite alternate ease-in-out;
+      transform-origin: bottom;
+      transition: opacity 0.4s ease;
+      z-index: 11;
+    }
+    .flame-1 { left: 64px; }
+    .flame-2 { left: 117px; }
+    .flame-3 { left: 170px; }
+
+    @keyframes flame {
+      from { transform: scale(1) rotate(-3deg); }
+      to { transform: scale(1.15) rotate(3deg); }
+    }
+
+    /* Smoke Animation */
+    .smoke {
+      position: absolute;
+      bottom: 150px;
+      width: 10px;
+      height: 10px;
+      background: rgba(220, 220, 220, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 12;
+    }
+    .smoke-1 { left: 67px; }
+    .smoke-2 { left: 120px; }
+    .smoke-3 { left: 173px; }
+
+    .smoke.active {
+      animation: smokeUp 2s forwards ease-out;
+    }
+    @keyframes smokeUp {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); }
+      50% { opacity: 0.5; transform: translateY(-40px) scale(3); filter: blur(3px); }
+      100% { opacity: 0; transform: translateY(-80px) scale(5); filter: blur(6px); }
+    }
+
+    /* Cake Cut Animation */
+    .cake-container.cut .cake-body {
+      clip-path: polygon(0 0, 50% 0, 55% 100%, 0 100%);
+    }
+    .cake-slice {
+      position: absolute;
+      bottom: 12px;
+      right: 15px;
+      width: 105px;
+      height: 100px;
+      background: linear-gradient(180deg, #ff669e, #ff1a6c);
+      border-radius: 0 20px 10px 0;
+      display: none;
+      transition: all 0.8s ease;
+    }
+    .cake-container.cut .cake-slice {
+      display: block;
+      transform: translateX(30px) rotate(10deg);
+    }
+
+    /* Knife Tool */
+    .knife {
+      position: absolute;
+      top: -10px;
+      right: -20px;
+      font-size: 45px;
+      opacity: 0;
+      transition: all 0.5s ease;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .knife.show {
+      opacity: 1;
+      animation: knifeCut 1.2s infinite alternate ease-in-out;
+    }
+    @keyframes knifeCut {
+      from { transform: translateY(0) rotate(0deg); }
+      to { transform: translateY(15px) rotate(-15deg); }
+    }
+
+    .balloon {
+      position: absolute;
+      width: 60px;
+      height: 78px;
+      border-radius: 50% 50% 45% 45%;
+      animation: balloonFloat 4s ease-in-out infinite;
+      z-index: 0;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 90px;
+      background: rgba(255,255,255,.6);
+      left: 50%;
+      top: 76px;
+    }
+    @keyframes balloonFloat {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-28px) rotate(4deg); }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      animation: confettiFall 3s linear forwards;
+      z-index: 40;
+    }
+    @keyframes confettiFall {
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 text-black relative">
+
+  <!-- Background Balloons -->
+  <div class="balloon bg-pink-400 left-8 top-20"></div>
+  <div class="balloon bg-purple-400 right-10 top-28" style="animation-delay:1s"></div>
+  <div class="balloon bg-yellow-300 left-1/4 bottom-16" style="animation-delay:2s"></div>
+  <div class="balloon bg-red-400 right-1/4 bottom-20" style="animation-delay:.5s"></div>
+
+  <!-- Audio Elements -->
+  <audio id="bdayAudio" preload="auto" loop></audio>
+  <!-- সাউন্ড এফেক্টস এর জন্য ওয়েব অডিও বা HTML Audio (নিচে ফ্রী অনলাইন সাউন্ড লিংকের ব্যবস্থা করা হয়েছে) -->
+  <audio id="blowSound" src="https://assets.mixkit.co/active_storage/sfx/2569/2569-preview.mp3" preload="auto"></audio>
+  <audio id="sliceSound" src="musics/slice.mp3" preload="auto"></audio>
+
+  <main class="relative z-10 w-full max-w-xl">
+    <div class="glass rounded-[2rem] p-6 sm:p-10 text-center min-h-[560px] flex flex-col items-center justify-center relative">
+      
+      <h2 id="headingText" class="font-love text-4xl sm:text-5xl mb-2 text-black">Make A Birthday Wish! 🎂</h2><br>
+      <p id="subText" class="mb-10 text-black/80 text-sm sm:text-base font-medium">
+        🌬️মোমবাতি নেভাতে microphone এ ফু মার !
+      </p>
+
+      <!-- Realistic Cake with 3 Candles -->
+      <div class="cake-container mb-8" id="cakeElement" onclick="handleCakeClick()">
+        <div class="plate"></div>
+        
+        <!-- Candles -->
+        <div class="candle candle-1"></div>
+        <div class="candle candle-2"></div>
+        <div class="candle candle-3"></div>
+
+        <!-- Flames -->
+        <div class="flame flame-1"></div>
+        <div class="flame flame-2"></div>
+        <div class="flame flame-3"></div>
+
+        <!-- Smoke -->
+        <div class="smoke smoke-1"></div>
+        <div class="smoke smoke-2"></div>
+        <div class="smoke smoke-3"></div>
+
+        <!-- Cake Body -->
+        <div class="cake-body">
+          <div class="cream-top"></div>
+          <div class="cherries">
+            <span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span>
+          </div>
+        </div>
+        <div class="cake-slice"></div>
+        <div class="knife" id="knife">🔪</div>
+      </div>
+
+      <!-- Final Page Navigation Button -->
+      <a id="finalPageBtn" href="habits_5th.html" class="hidden mt-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-8 py-4 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition">
+        See Your Rating Card  📊❤️
+      </a>
+
+    </div>
+  </main>
+
+  <script>
+    let candleBlown = false;
+    let cakeCut = false;
+
+    // Load Music from localStorage and Setup Audio & Mic
+    window.addEventListener('load', () => {
+      initMicSensor();
+
+      const savedSong = localStorage.getItem('birthdaySong') || 'musics/cake.mp3';
+      const audio = document.getElementById('bdayAudio');
+      audio.src = savedSong;
+
+      const playAudioOnInteraction = () => {
+        audio.play().catch(e => console.log("Audio play blocked:", e));
+        window.removeEventListener('click', playAudioOnInteraction);
+        window.removeEventListener('touchstart', playAudioOnInteraction);
+      };
+
+      audio.play().catch(() => {
+        window.addEventListener('click', playAudioOnInteraction);
+        window.addEventListener('touchstart', playAudioOnInteraction);
+      });
+    });
+
+    function initMicSensor() {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const analyser = audioContext.createAnalyser();
+        const microphone = audioContext.createMediaStreamSource(stream);
+        const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+
+        analyser.smoothingTimeConstant = 0.8;
+        analyser.fftSize = 1024;
+
+        microphone.connect(analyser);
+        analyser.connect(scriptProcessor);
+        scriptProcessor.connect(audioContext.destination);
+
+        scriptProcessor.onaudioprocess = function() {
+          const array = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(array);
+          let values = 0;
+          for (let i = 0; i < array.length; i++) {
+            values += array[i];
+          }
+          const average = values / array.length;
+          
+          if (average > 40 && !candleBlown) {
+            blowCandles();
+            stream.getTracks().forEach(track => track.stop());
+          }
+        };
+      }).catch(err => {
+        document.getElementById('subText').textContent = "⚠️ Please allow microphone permission to blow out candles!";
+      });
+    }
+
+    function blowCandles() {
+      if (candleBlown) return;
+      candleBlown = true;
+
+      // মোমবাতি নেভানোর সাউন্ড এফেক্ট প্লে করা
+      const blowSound = document.getElementById('blowSound');
+      if(blowSound) {
+        blowSound.currentTime = 0;
+        blowSound.play().catch(e => console.log(e));
+      }
+
+      document.querySelectorAll('.flame').forEach(f => f.style.opacity = '0');
+      document.querySelectorAll('.smoke').forEach(s => s.classList.add('active'));
+
+      document.getElementById('headingText').textContent = "Wish Granted! ✨";
+      document.getElementById('subText').textContent = "Now tap on the cake to cut a slice!";
+      
+      document.getElementById('knife').classList.add('show');
+
+      const audio = document.getElementById('bdayAudio');
+      if(audio) audio.play().catch(()=>{});
+
+      launchConfetti(80);
+    }
+
+    function handleCakeClick() {
+      if (!candleBlown) {
+        return;
+      }
+      
+      if (!cakeCut) {
+        cakeCut = true;
+
+        // কেক কাটার সাউন্ড এফেক্ট প্লে করা
+        const sliceSound = document.getElementById('sliceSound');
+        if(sliceSound) {
+          sliceSound.currentTime = 0;
+          sliceSound.play().catch(e => console.log(e));
+        }
+
+        document.getElementById('cakeElement').classList.add('cut');
+        document.getElementById('knife').classList.remove('show');
+        document.getElementById('headingText').textContent = "Happy Birthday Moon 😘🎉";
+        document.getElementById('subText').textContent = "Your cake is cut! Time for the final surprise!";
+        
+        launchConfetti(120);
+
+        setTimeout(() => {
+          document.getElementById('finalPageBtn').classList.remove('hidden');
+        }, 800);
+      }
+    }
+
+    function createFloatingHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = ['❤️','💖','💕','💗','💘'][Math.floor(Math.random() * 5)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (18 + Math.random() * 28) + 'px';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, 350);
+    }
+
+    function createSparkles() {
+      for (let i = 0; i < 35; i++) {
+        const sp = document.createElement('div');
+        sp.className = 'sparkle';
+        sp.style.left = Math.random() * 100 + 'vw';
+        sp.style.top = Math.random() * 100 + 'vh';
+        sp.style.animationDelay = Math.random() * 3 + 's';
+        document.body.appendChild(sp);
+      }
+    }
+
+    function launchConfetti(amount = 100) {
+      const colors = ['#ff4d94', '#fff176', '#7c4dff', '#00e5ff', '#ffffff', '#ff1744'];
+      for (let i = 0; i < amount; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDelay = Math.random() * 1.2 + 's';
+        c.style.animationDuration = (2 + Math.random() * 2.5) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4500);
+      }
+    }
+
+    createFloatingHearts();
+    createSparkles();
+  </script>
+</body>
+</html>
