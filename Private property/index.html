@@ -3,18 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday My Minsi Friend</title>
+
+  <title>Something Special 💗</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-     overflow-y: auto;
-      background: radial-gradient(circle at top, #ffdde8, #ffe9f2, #ffd1dc, #17001f);
+      overflow-y: auto;
+      background:
+        radial-gradient(
+          circle at top,
+          #ffdde8,
+          #ffe9f2,
+          #ffd1dc,
+          #17001f
+        );
     }
-    .font-love { font-family: 'Pacifico', cursive; }
 
+    .font-love {
+      font-family: 'Pacifico', cursive;
+    }
+
+    /* Floating Hearts */
     .heart {
       position: fixed;
       bottom: -40px;
@@ -23,12 +44,27 @@
       z-index: 1;
       pointer-events: none;
     }
+
     @keyframes floatHeart {
-      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
-      15% { opacity: 1; }
-      100% { transform: translateY(-115vh) rotate(360deg) scale(1.8); opacity: 0; }
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform:
+          translateY(-115vh)
+          rotate(360deg)
+          scale(1.8);
+        opacity: 0;
+      }
     }
 
+    /* Sparkles */
     .sparkle {
       position: fixed;
       width: 7px;
@@ -40,18 +76,29 @@
       z-index: 2;
       pointer-events: none;
     }
+
     @keyframes sparkle {
-      0%, 100% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.3); opacity: 1; }
+      0%, 100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
     }
 
+    /* Glass Card */
     .glass {
       background: rgba(255, 255, 255, 0.22);
       backdrop-filter: blur(18px);
       border: 1px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 25px 60px rgba(121, 0, 65, 0.28);
+      box-shadow:
+        0 25px 60px rgba(121, 0, 65, 0.28);
     }
 
+    /* Balloons */
     .balloon {
       position: absolute;
       width: 60px;
@@ -60,6 +107,7 @@
       animation: balloonFloat 4s ease-in-out infinite;
       z-index: 0;
     }
+
     .balloon::after {
       content: '';
       position: absolute;
@@ -69,71 +117,375 @@
       left: 50%;
       top: 76px;
     }
+
     @keyframes balloonFloat {
-      0%,100% { transform: translateY(0) rotate(-3deg); }
-      50% { transform: translateY(-28px) rotate(4deg); }
+      0%,100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-28px) rotate(4deg);
+      }
+    }
+
+    /* Countdown */
+    .count-box {
+      background: rgba(255,255,255,0.30);
+      border: 1px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(120,0,70,0.15);
+    }
+
+    .count-number {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      color: #111;
+    }
+
+    .count-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      margin-top: 7px;
+      color: rgba(0,0,0,0.65);
+    }
+
+    /* Locked Button */
+    .locked {
+      opacity: 0.65;
+      cursor: not-allowed;
+      filter: grayscale(20%);
+    }
+
+    .unlocked {
+      animation: pulseButton 1.8s infinite;
+    }
+
+    @keyframes pulseButton {
+      0%,100% {
+        box-shadow: 0 0 0 0 rgba(255, 50, 130, 0.35);
+      }
+
+      50% {
+        box-shadow: 0 0 0 15px rgba(255, 50, 130, 0);
+      }
     }
   </style>
 </head>
+
+
 <body class="min-h-screen flex items-center justify-center px-4 text-black relative">
 
   <!-- Background Balloons -->
   <div class="balloon bg-pink-400 left-8 top-20"></div>
-  <div class="balloon bg-purple-400 right-10 top-28" style="animation-delay:1s"></div>
-  <div class="balloon bg-yellow-300 left-1/4 bottom-16" style="animation-delay:2s"></div>
-  <div class="balloon bg-red-400 right-1/4 bottom-20" style="animation-delay:.5s"></div>
 
+  <div
+    class="balloon bg-purple-400 right-10 top-28"
+    style="animation-delay:1s"
+  ></div>
+
+  <div
+    class="balloon bg-yellow-300 left-1/4 bottom-16"
+    style="animation-delay:2s"
+  ></div>
+
+  <div
+    class="balloon bg-red-400 right-1/4 bottom-20"
+    style="animation-delay:.5s"
+  ></div>
+
+
+  <!-- Main -->
   <main class="relative z-10 w-full max-w-3xl">
-    <div class="glass rounded-[2rem] p-6 sm:p-10 text-center min-h-[560px] flex items-center justify-center">
+
+    <div
+      class="glass rounded-[2rem] p-6 sm:p-10 text-center min-h-[560px] flex items-center justify-center"
+    >
+
       <section class="w-full">
-        <p class="uppercase tracking-[.35em] text-sm text-black mb-4">A tiny surprise for you</p>
-        <h1 class="font-love text-5xl sm:text-7xl text-black drop-shadow-lg mb-6">Hey Madam  🫣</h1>
-        <p class="text-lg sm:text-xl text-black/90 max-w-xl mx-auto mb-8">
-          Today is the prettiest day. It is the day my favorite friend came into this world.
+
+        <p class="uppercase tracking-[.35em] text-sm text-black mb-4">
+          A tiny surprise for you
         </p>
-        <!-- বাটনে ক্লিক করলে সিগন্যাল সেভ হয়ে ২য় পেজে যাবে -->
-        <button onclick="goToNextPage('latter_2nd.html')" class="bg-white text-pink-600 px-8 py-4 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition">
-          click here 🥺 🎵
+
+
+        <h1 class="font-love text-5xl sm:text-7xl text-black drop-shadow-lg mb-6">
+          Hey Madam 🫣
+        </h1>
+
+
+        <p class="text-lg sm:text-xl text-black/90 max-w-xl mx-auto mb-8">
+          Something special is waiting for you...
+          but you have to wait a little longer. 🥺💗
+        </p>
+
+
+        <!-- Countdown -->
+        <div class="flex justify-center gap-2 sm:gap-4 mb-8">
+
+          <div class="count-box rounded-2xl p-3 sm:p-5 min-w-[65px] sm:min-w-[85px]">
+            <div id="days" class="count-number">00</div>
+            <div class="count-label">DAYS</div>
+          </div>
+
+          <div class="count-box rounded-2xl p-3 sm:p-5 min-w-[65px] sm:min-w-[85px]">
+            <div id="hours" class="count-number">00</div>
+            <div class="count-label">HOURS</div>
+          </div>
+
+          <div class="count-box rounded-2xl p-3 sm:p-5 min-w-[65px] sm:min-w-[85px]">
+            <div id="minutes" class="count-number">00</div>
+            <div class="count-label">MINUTES</div>
+          </div>
+
+          <div class="count-box rounded-2xl p-3 sm:p-5 min-w-[65px] sm:min-w-[85px]">
+            <div id="seconds" class="count-number">00</div>
+            <div class="count-label">SECONDS</div>
+          </div>
+
+        </div>
+
+
+        <!-- Status -->
+        <p
+          id="statusText"
+          class="text-black/80 mb-5 font-semibold"
+        >
+          🔒 The surprise is still locked...
+        </p>
+
+
+        <!-- Button -->
+        <button
+          id="nextButton"
+          disabled
+          onclick="goToNextPage('latter_2nd.html')"
+          class="locked bg-white text-pink-600 px-8 py-4 rounded-full font-bold shadow-xl transition"
+        >
+          🔒 Wait for it...
         </button>
+
       </section>
+
     </div>
+
   </main>
 
+
   <script>
+
+    /* =====================================
+       🎂 BIRTHDAY DATE
+       ===================================== */
+
+    // এখানে birthday date/time সেট করবে
+    // Example:
+    // 14 August 2026, 12:00 AM
+
+    const birthday = new Date("August 14, 2026 00:00:00").getTime();
+
+
+    /* =====================================
+       ⏳ COUNTDOWN
+       ===================================== */
+
+    const countdown = setInterval(function () {
+
+      const now = new Date().getTime();
+
+      const distance = birthday - now;
+
+
+      // Time calculation
+
+      const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+      );
+
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+      );
+
+      const minutes = Math.floor(
+        (distance % (1000 * 60 * 60))
+        / (1000 * 60)
+      );
+
+      const seconds = Math.floor(
+        (distance % (1000 * 60))
+        / 1000
+      );
+
+
+      // Display
+
+      document.getElementById("days").innerText =
+        String(days).padStart(2, "0");
+
+      document.getElementById("hours").innerText =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("minutes").innerText =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("seconds").innerText =
+        String(seconds).padStart(2, "0");
+
+
+      /* =====================================
+         🎉 COUNTDOWN FINISHED
+         ===================================== */
+
+      if (distance <= 0) {
+
+        clearInterval(countdown);
+
+
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+
+
+        const button =
+          document.getElementById("nextButton");
+
+        const status =
+          document.getElementById("statusText");
+
+
+        // Unlock button
+
+        button.disabled = false;
+
+        button.classList.remove("locked");
+
+        button.classList.add("unlocked");
+
+        button.innerHTML =
+          "click here 🥺 🎵";
+
+
+        status.innerHTML =
+          "🎉 Finally... your little surprise is ready 💗";
+
+
+        status.classList.add("font-love");
+
+      }
+
+    }, 1000);
+
+
+    /* =====================================
+       💗 NEXT PAGE
+       ===================================== */
+
     function goToNextPage(page) {
-      // ২য় পেজে যাওয়ার আগে স্টোরেজে গান চালুর সিগন্যাল ও শুরু থেকে (0 সেকেন্ড) টাইম সেট করে দেওয়া
-      localStorage.setItem('playMusic', 'true');
-      localStorage.setItem('musicTime', '0');
-      
+
+      // Extra protection
+      // Birthday time শেষ না হলে page যাবে না
+
+      const now = new Date().getTime();
+
+      if (now < birthday) {
+        return;
+      }
+
+
+      // Music signal
+
+      localStorage.setItem(
+        'playMusic',
+        'true'
+      );
+
+      localStorage.setItem(
+        'musicTime',
+        '0'
+      );
+
+
+      // Next page
+
       window.location.href = page;
+
     }
+
+
+    /* =====================================
+       ❤️ FLOATING HEARTS
+       ===================================== */
 
     function createFloatingHearts() {
+
       setInterval(() => {
-        const heart = document.createElement('div');
+
+        const heart =
+          document.createElement('div');
+
         heart.className = 'heart';
-        heart.innerHTML = ['❤️','💖','💕','💗','💘'][Math.floor(Math.random() * 5)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.fontSize = (18 + Math.random() * 28) + 'px';
-        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+
+        heart.innerHTML =
+          ['❤️','💖','💕','💗','💘']
+          [Math.floor(Math.random() * 5)];
+
+        heart.style.left =
+          Math.random() * 100 + 'vw';
+
+        heart.style.fontSize =
+          (18 + Math.random() * 28) + 'px';
+
+        heart.style.animationDuration =
+          (4 + Math.random() * 4) + 's';
+
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 8000);
+
+
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+
       }, 350);
+
     }
+
+
+    /* =====================================
+       ✨ SPARKLES
+       ===================================== */
 
     function createSparkles() {
+
       for (let i = 0; i < 35; i++) {
-        const sp = document.createElement('div');
+
+        const sp =
+          document.createElement('div');
+
         sp.className = 'sparkle';
-        sp.style.left = Math.random() * 100 + 'vw';
-        sp.style.top = Math.random() * 100 + 'vh';
-        sp.style.animationDelay = Math.random() * 3 + 's';
+
+        sp.style.left =
+          Math.random() * 100 + 'vw';
+
+        sp.style.top =
+          Math.random() * 100 + 'vh';
+
+        sp.style.animationDelay =
+          Math.random() * 3 + 's';
+
         document.body.appendChild(sp);
+
       }
+
     }
 
+
     createFloatingHearts();
+
     createSparkles();
+
   </script>
+
 </body>
 </html>
