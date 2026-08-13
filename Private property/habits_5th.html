@@ -3,374 +3,1413 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Report Card of Moon 💖</title>
+
+  <title>Report Card of Moon 💖</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Canvas Confetti Library for Fireworks/Confetti Effect -->
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       overflow-y: auto;
-      background-image: url('https://images.pexels.com/photos/220118/pexels-photo-220118.jpeg?auto=compress&cs=tinysrgb&w=1920');
+      min-height: 100vh;
+
+      background-image:
+        url("https://images.pexels.com/photos/220118/pexels-photo-220118.jpeg?auto=compress&cs=tinysrgb&w=1920");
+
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      min-height: 100vh;
+
       position: relative;
     }
 
     body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(20, 10, 45, 0.8) 0%, rgba(60, 20, 75, 0.8) 100%);
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(20, 10, 45, 0.8),
+          rgba(60, 20, 75, 0.8)
+        );
+
       z-index: 1;
+      pointer-events: none;
     }
 
-    .font-love { font-family: 'Pacifico', cursive; }
+    .font-love {
+      font-family: "Pacifico", cursive;
+    }
 
     .glass-card {
       background: rgba(255, 255, 255, 0.12);
+
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
+
       border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+      box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
     .glass-inner {
       background: rgba(255, 255, 255, 0.85);
+
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
+
+    /* =========================
+       FLOATING HEARTS
+    ========================= */
 
     .heart {
       position: fixed;
       bottom: -40px;
+
       color: rgba(255, 130, 185, 0.85);
+
       animation: floatHeart linear infinite;
+
       z-index: 2;
       pointer-events: none;
     }
+
     @keyframes floatHeart {
-      0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-115vh) rotate(360deg) scale(1.6); opacity: 0; }
+      0% {
+        transform:
+          translateY(0)
+          rotate(0deg)
+          scale(0.8);
+
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        transform:
+          translateY(-115vh)
+          rotate(360deg)
+          scale(1.6);
+
+        opacity: 0;
+      }
     }
+
+    /* =========================
+       SPARKLES
+    ========================= */
 
     .sparkle {
       position: fixed;
+
       width: 6px;
       height: 6px;
+
       border-radius: 50%;
+
       background: #ffd700;
+
       box-shadow: 0 0 15px #ff69b4;
-      animation: sparkleAnim 2.5s infinite ease-in-out;
+
+      animation:
+        sparkleAnim
+        2.5s
+        infinite
+        ease-in-out;
+
       z-index: 2;
       pointer-events: none;
     }
+
     @keyframes sparkleAnim {
-      0%, 100% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.4); opacity: 1; }
+      0%,
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.4);
+        opacity: 1;
+      }
     }
 
+    /* =========================
+       BUTTONS
+    ========================= */
+
     .magic-btn {
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition:
+        all 0.4s
+        cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     .magic-btn:hover {
-      transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 15px 30px rgba(236, 72, 153, 0.4);
+      transform:
+        translateY(-4px)
+        scale(1.03);
+
+      box-shadow:
+        0 15px 30px
+        rgba(236, 72, 153, 0.4);
     }
+
+    .magic-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
 
     .modal-backdrop {
       background: rgba(10, 5, 20, 0.65);
+
       backdrop-filter: blur(12px);
-      transition: all 0.4s ease;
+      -webkit-backdrop-filter: blur(12px);
     }
+
     .modal-box {
-      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation:
+        popIn
+        0.4s
+        cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     @keyframes popIn {
-      0% { transform: scale(0.7) translateY(20px); opacity: 0; }
-      100% { transform: scale(1) translateY(0); opacity: 1; }
+      0% {
+        transform:
+          scale(0.7)
+          translateY(20px);
+
+        opacity: 0;
+      }
+
+      100% {
+        transform:
+          scale(1)
+          translateY(0);
+
+        opacity: 1;
+      }
     }
+
+    /* =========================
+       CHECK BADGE
+    ========================= */
 
     .checked-badge {
       position: absolute;
+
       top: -10px;
       right: -10px;
+
       background: #10b981;
+
       color: white;
+
       border-radius: 50%;
+
       width: 28px;
       height: 28px;
+
       font-size: 13px;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+      box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.3);
+
       border: 2px solid white;
+
       z-index: 3;
+
+      animation:
+        badgePop
+        0.4s
+        cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes badgePop {
+      0% {
+        transform: scale(0);
+      }
+
+      70% {
+        transform: scale(1.25);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* =========================
+       CERTIFICATE CARD
+    ========================= */
+
+    #certificateCard {
+      position: relative;
+      transform-origin: center bottom;
+
+      animation:
+        certificateReveal
+        0.95s
+        cubic-bezier(0.175, 0.885, 0.32, 1.275)
+        forwards;
+    }
+
+    @keyframes certificateReveal {
+      0% {
+        opacity: 0;
+
+        transform:
+          translateY(90px)
+          scale(0.72)
+          rotateX(18deg);
+
+        filter: blur(10px);
+      }
+
+      35% {
+        opacity: 0.6;
+      }
+
+      60% {
+        opacity: 1;
+
+        transform:
+          translateY(-12px)
+          scale(1.04)
+          rotateX(0deg);
+
+        filter: blur(0);
+      }
+
+      78% {
+        transform:
+          translateY(5px)
+          scale(0.985);
+      }
+
+      100% {
+        opacity: 1;
+
+        transform:
+          translateY(0)
+          scale(1)
+          rotateX(0deg);
+
+        filter: blur(0);
+      }
+    }
+
+    /* =========================
+       CARD GLOW
+    ========================= */
+
+    #certificateCard::after {
+      content: "";
+
+      position: absolute;
+      inset: -3px;
+
+      border-radius: 1.5rem;
+
+      pointer-events: none;
+
+      opacity: 0;
+
+      animation:
+        certificateGlow
+        1.4s
+        ease-out
+        0.25s
+        forwards;
+    }
+
+    @keyframes certificateGlow {
+      0% {
+        opacity: 0;
+
+        box-shadow:
+          0 0 0 rgba(236, 72, 153, 0);
+      }
+
+      35% {
+        opacity: 1;
+
+        box-shadow:
+          0 0 25px rgba(236, 72, 153, 0.8),
+          0 0 55px rgba(244, 114, 182, 0.5);
+      }
+
+      70% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 0;
+
+        box-shadow:
+          0 0 0 rgba(236, 72, 153, 0);
+      }
+    }
+
+    /* =========================
+       CONTENT ANIMATION
+    ========================= */
+
+    #certificateCard h3,
+    #certificateCard > p,
+    #certificateCard > div {
+      animation:
+        contentFade
+        0.6s
+        ease
+        0.35s
+        both;
+    }
+
+    @keyframes contentFade {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================
+       CONTINUE BUTTON
+    ========================= */
+
+    #continueBtn {
+      animation:
+        finalButtonReveal
+        0.7s
+        cubic-bezier(0.175, 0.885, 0.32, 1.275)
+        0.55s
+        both;
+    }
+
+    @keyframes finalButtonReveal {
+      0% {
+        opacity: 0;
+
+        transform:
+          translateY(25px)
+          scale(0.75);
+      }
+
+      70% {
+        opacity: 1;
+
+        transform:
+          translateY(-4px)
+          scale(1.05);
+      }
+
+      100% {
+        opacity: 1;
+
+        transform:
+          translateY(0)
+          scale(1);
+      }
     }
   </style>
 </head>
-<body class="flex items-center justify-center p-4 relative text-gray-800 min-h-screen">
 
-  <!-- Audio Element 1: For 'Good' Button -->
-  <audio id="goodMusic" preload="auto">
-    <source src="p5.mp3" type="audio/mpeg">
-    <source src="p5.m4a" type="audio/mp4">
+<body
+  class="flex items-center justify-center p-4 relative text-gray-800 min-h-screen"
+>
+
+  <!-- =====================================
+       MUSIC FILES
+  ====================================== -->
+
+  <!-- 1st option -->
+  <audio
+    id="goodMusic"
+    preload="auto"
+  >
+    <source
+      src="p5.m4a"
+      type="audio/mp4"
+    />
   </audio>
 
-  <!-- Audio Element 2: For 'Bad' Button -->
-  <audio id="badMusic" preload="auto">
-    <source src="redflag.mp3" type="audio/mpeg">
-    <source src="redflag.m4a" type="audio/mp4">
+
+  <!-- 2nd option -->
+  <audio
+    id="badMusic"
+    preload="auto"
+  >
+    <source
+      src="p5.mp3"
+      type="audio/mpeg"
+    />
   </audio>
 
-  <main class="relative z-10 w-full max-w-2xl my-auto py-8">
-    
-    <div class="glass-card rounded-[3rem] p-6 sm:p-10 text-center relative overflow-hidden">
-      
-      <div class="inline-flex items-center gap-2 bg-white/20 border border-white/30 px-4 py-1.5 rounded-full text-white text-xs font-semibold mb-4 shadow-inner">
-        <i class="fa-solid fa-wand-magic-sparkles text-pink-300"></i> Report card of Moon  📊
+
+  <!-- =====================================
+       MAIN
+  ====================================== -->
+
+  <main
+    class="relative z-10 w-full max-w-2xl my-auto py-8"
+  >
+
+    <div
+      class="glass-card rounded-[3rem] p-6 sm:p-10 text-center relative overflow-hidden"
+    >
+
+      <!-- TOP BADGE -->
+
+      <div
+        class="inline-flex items-center gap-2 bg-white/20 border border-white/30 px-4 py-1.5 rounded-full text-white text-xs font-semibold mb-4 shadow-inner"
+      >
+
+        <i
+          class="fa-solid fa-wand-magic-sparkles text-pink-300"
+        ></i>
+
+        Report card of Moon 📊
+
       </div>
 
-      <h1 class="font-love text-3xl sm:text-5xl text-white mb-3 drop-shadow-lg">
-        All About You 💖 
+
+      <!-- TITLE -->
+
+      <h1
+        class="font-love text-3xl sm:text-5xl text-white mb-3 drop-shadow-lg"
+      >
+        All About You 💖
       </h1>
-      <p id="instructionText" class="text-pink-100 text-xs sm:text-sm font-medium mb-6">
+
+
+      <!-- INSTRUCTION -->
+
+      <p
+        id="instructionText"
+        class="text-pink-100 text-xs sm:text-sm font-medium mb-6"
+      >
         Tap below to uncover the magic and the mischief! 🪄
       </p>
 
-      <!-- Progress Bar -->
-      <div class="w-full bg-black/20 rounded-full h-3 mb-6 p-0.5 border border-white/20 max-w-md mx-auto">
-        <div id="progressBar" class="bg-gradient-to-r from-pink-400 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-      </div>
 
-      <!-- 2 Main Action Buttons -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 max-w-md mx-auto">
-        
-        <div class="relative">
-          <button id="btnGood" onclick="openBox('good')" class="magic-btn w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center gap-2 border border-white/30 cursor-pointer">
-            <span class="text-3xl">💓</span>
-            <span class="text-base sm:text-lg">What I Love About U</span>
-            <span class="text-xs text-emerald-100 font-normal">what makes you special</span>
-          </button>
-          <span id="badgeGood" class="checked-badge hidden">✓</span>
-        </div>
+      <!-- PROGRESS -->
 
-        <div class="relative">
-          <button id="btnBad" onclick="openBox('bad')" class="magic-btn w-full bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center gap-2 border border-white/30 cursor-pointer">
-            <span class="text-3xl">🚩</span>
-            <span class="text-base sm:text-lg">Your Red Flag Collection </span>
-            <span class="text-xs text-pink-100 font-normal">But still you're favourite 🥺</span>
-          </button>
-          <span id="badgeBad" class="checked-badge hidden">✓</span>
-        </div>
+      <div
+        class="w-full bg-black/20 rounded-full h-3 mb-6 p-0.5 border border-white/20 max-w-md mx-auto"
+      >
+
+        <div
+          id="progressBar"
+          class="bg-gradient-to-r from-pink-400 to-emerald-400 h-full rounded-full transition-all duration-500"
+          style="width: 0%"
+        ></div>
 
       </div>
 
-      <!-- Certificate Box -->
-      <div class="glass-inner border-2 border-pink-300 rounded-3xl p-6 mb-6 text-center shadow-2xl max-w-md mx-auto relative overflow-hidden">
-        <div class="absolute -right-4 top-4 bg-pink-500 text-white text-[9px] font-bold uppercase tracking-wider px-7 py-1 rotate-45 shadow-md">
+
+      <!-- =====================================
+           TWO OPTIONS
+      ====================================== -->
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 max-w-md mx-auto"
+      >
+
+        <!-- FIRST OPTION -->
+
+        <div class="relative">
+
+          <button
+            id="btnGood"
+            type="button"
+            onclick="openBox('good')"
+            class="magic-btn w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center gap-2 border border-white/30 cursor-pointer"
+          >
+
+            <span class="text-3xl">
+              💓
+            </span>
+
+            <span class="text-base sm:text-lg">
+              What I Love About U
+            </span>
+
+            <span class="text-xs text-emerald-100 font-normal">
+              what makes you special
+            </span>
+
+          </button>
+
+
+          <span
+            id="badgeGood"
+            class="checked-badge hidden"
+          >
+            ✓
+          </span>
+
+        </div>
+
+
+        <!-- SECOND OPTION -->
+
+        <div class="relative">
+
+          <button
+            id="btnBad"
+            type="button"
+            onclick="openBox('bad')"
+            class="magic-btn w-full bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center gap-2 border border-white/30 cursor-pointer"
+          >
+
+            <span class="text-3xl">
+              🚩
+            </span>
+
+            <span class="text-base sm:text-lg">
+              Your Red Flag Collection
+            </span>
+
+            <span class="text-xs text-pink-100 font-normal">
+              But still you're favourite 🥺
+            </span>
+
+          </button>
+
+
+          <span
+            id="badgeBad"
+            class="checked-badge hidden"
+          >
+            ✓
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           CERTIFICATE CARD
+      ====================================== -->
+
+      <div
+        id="certificateCard"
+        class="hidden glass-inner border-2 border-pink-300 rounded-3xl p-6 mb-6 text-center shadow-2xl max-w-md mx-auto relative overflow-hidden"
+      >
+
+        <!-- APPROVED -->
+
+        <div
+          class="absolute -right-4 top-4 bg-pink-500 text-white text-[9px] font-bold uppercase tracking-wider px-7 py-1 rotate-45 shadow-md"
+        >
           Approved 💖
         </div>
 
-        <h3 class="font-love text-2xl sm:text-3xl text-pink-600 mb-1">Chief Operating Officer (Madam Ji) 🤭🫶</h3>
-        <p class="text-xs text-gray-500 font-medium mb-3">Issued By: Your Baccha 👶</p>
-        
-        <div class="bg-pink-50/80 border border-pink-200 rounded-2xl p-3 mb-3 text-left space-y-1.5 text-xs text-gray-700">
-          <div class="flex justify-between items-center font-semibold">
-            <span>Status:</span>
-            <span class="text-emerald-600 bg-emerald-100 px-2.5 py-0.5 rounded-full">Chief Advisor of My Life 🧠✨</span>
+
+        <!-- TITLE -->
+
+        <h3
+          class="font-love text-2xl sm:text-3xl text-pink-600 mb-1"
+        >
+
+          Chief Operating Officer
+
+          <br />
+
+          (Madam Ji) 🤭🫶
+
+        </h3>
+
+
+        <!-- ISSUED -->
+
+        <p
+          class="text-xs text-gray-500 font-medium mb-3"
+        >
+          Issued By: Your Baccha 👶
+        </p>
+
+
+        <!-- DETAILS -->
+
+        <div
+          class="bg-pink-50/80 border border-pink-200 rounded-2xl p-3 mb-3 text-left space-y-1.5 text-xs text-gray-700"
+        >
+
+          <div
+            class="flex justify-between items-center font-semibold"
+          >
+
+            <span>
+              Status:
+            </span>
+
+            <span
+              class="text-emerald-600 bg-emerald-100 px-2.5 py-0.5 rounded-full"
+            >
+              Chief Advisor of My Life 🧠✨
+            </span>
+
           </div>
-          <div class="flex justify-between items-center font-semibold">
-            <span>Special Power:</span>
-            <span class="text-pink-600">Making Me Smile Instantly ✨</span>
+
+
+          <div
+            class="flex justify-between items-center font-semibold"
+          >
+
+            <span>
+              Special Power:
+            </span>
+
+            <span class="text-pink-600">
+              Making Me Smile Instantly ✨
+            </span>
+
           </div>
+
         </div>
 
-        <p class="text-gray-800 text-xs sm:text-sm italic font-medium">
+
+        <!-- MESSAGE -->
+
+        <p
+          class="text-gray-800 text-xs sm:text-sm italic font-medium"
+        >
           "এভাবেই এই বাচ্চা টার যত্ন নিস! ❤️"
         </p>
+
       </div>
 
-      <!-- Final Navigation Button -->
-      <div class="flex items-center justify-center">
-        <a id="continueBtn" href="massage_6th.html" class="hidden bg-gradient-to-r from-pink-500 via-purple-500 to-rose-500 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition text-sm animate-bounce border border-white/40">
-          Continue to Final Surprise letter💌
+
+      <!-- =====================================
+           CONTINUE
+      ====================================== -->
+
+      <div
+        class="flex items-center justify-center"
+      >
+
+        <a
+          id="continueBtn"
+          href="massage_6th.html"
+          class="hidden bg-gradient-to-r from-pink-500 via-purple-500 to-rose-500 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition text-sm animate-bounce border border-white/40"
+        >
+          Continue to Final Surprise letter 💌
         </a>
+
       </div>
 
     </div>
 
   </main>
 
-  <!-- Modal -->
-  <div id="traitModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
-    <div id="modalBox" class="glass-inner border border-white rounded-3xl p-6 max-w-sm w-full shadow-2xl modal-box relative">
-      
-      <button onclick="closeBox()" class="absolute top-4 right-4 bg-gray-200/80 hover:bg-gray-300 text-gray-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs transition cursor-pointer">
+
+  <!-- =====================================
+       MODAL
+  ====================================== -->
+
+  <div
+    id="traitModal"
+    class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden"
+  >
+
+    <div
+      class="glass-inner border border-white rounded-3xl p-6 max-w-sm w-full shadow-2xl modal-box relative"
+    >
+
+      <!-- CLOSE X -->
+
+      <button
+        type="button"
+        onclick="closeBox()"
+        class="absolute top-4 right-4 bg-gray-200/80 hover:bg-gray-300 text-gray-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs transition cursor-pointer"
+      >
         ✕
       </button>
 
-      <div class="text-center mb-4 pr-2">
-        <span id="modalIcon" class="text-4xl block mb-1">💓</span>
-        <h2 id="modalTitle" class="font-love text-2xl text-gray-900">What I Love About U</h2>
+
+      <!-- HEADER -->
+
+      <div
+        class="text-center mb-4 pr-2"
+      >
+
+        <span
+          id="modalIcon"
+          class="text-4xl block mb-1"
+        >
+          💓
+        </span>
+
+
+        <h2
+          id="modalTitle"
+          class="font-love text-2xl text-gray-900"
+        >
+          What I Love About U
+        </h2>
+
       </div>
 
-      <div id="modalContent" class="space-y-2.5 text-left max-h-[50vh] overflow-y-auto pr-1 text-xs sm:text-sm text-gray-800"></div>
 
-      <button onclick="closeBox()" class="mt-5 w-all bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-2.5 rounded-xl font-semibold transition text-xs sm:text-sm shadow-md cursor-pointer w-full">
+      <!-- CONTENT -->
+
+      <div
+        id="modalContent"
+        class="space-y-2.5 text-left max-h-[50vh] overflow-y-auto pr-1 text-xs sm:text-sm text-gray-800"
+      ></div>
+
+
+      <!-- GOT IT -->
+
+      <button
+        type="button"
+        onclick="closeBox()"
+        class="mt-5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-2.5 rounded-xl font-semibold transition text-xs sm:text-sm shadow-md cursor-pointer w-full"
+      >
         Got It! ❤️
       </button>
 
     </div>
+
   </div>
 
+
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
+
   <script>
+
+    /* =====================================
+       DATA
+    ====================================== */
+
     const goodData = [
-      "💖 <b>Care & Love:</b> অনেক বেশি টেককেয়ার করো এবং সবসময় খেয়াল রাখো।",
-      "😊 <b>Cutest Smile:</b> হাসলে পৃথিবীর সবচেয়ে মিষ্টি লাগে দেখতে।",
-      "🌸 <b>Soft Hearted:</b> মনটা অনেক নরম এবং খুব সহজেই সবাইকে বিশ্বাস করো।",
-      "✨ <b>Always Supporter:</b> যেকোনো সমস্যায় নিঃশর্তভাবে পাশে থাকো।",
-      "🥰 <b>My Comfort Zone:</b> যার সাথে কথা বললে সব মানসিক চাপ একদম কমে যায়।"
+
+      "😘 <b>Care & Love:</b> মুন মাহিমের অনেক কেয়ার করে। নিজের বাচ্চার মতো ভালবাসে।",
+
+      "🎀 <b>Cheap Adviser:</b> মাহিমের যাতে কোন কষ্ট না হয়, তার সব সিদ্ধান্ত মুন করে দেয়।",
+
+      "🌸 <b>Soft Hearted:</b> মুনের মনটা অনেক নরম এবং খুব সহজেই মন খারাপ করে বসে, আবার খুব সহজেই ঠিক হয়ে যায়।",
+
+      "💭 <b>Talkative:</b> মুন মাহিমের কাছে বকবক করে।",
+
+      "💞 <b>My Comfort Zone:</b> মুনের সাথে কথা বললে মাহিমের সব মন খারাপ দূর হয়ে যায়।"
+
     ];
+
 
     const badData = [
-      "🙈 <b>Mood Swings:</b> হুটহাট না জানিয়ে মুড অফ করে বসে থাকা।",
-      "😠 <b>Cute Anger:</b> ফালতু কারণে ছোট বাচ্চাদের মতো রাগ দেখানো।",
-      "🍕 <b>Food Decisions:</b> 'কী খাবো?' জিজ্ঞেস করলে সবসময় 'যেকোনো কিছু' বলা!",
-      "📱 <b>Late Replies:</b> মাঝে মাঝে মেসেজের রিপ্লাই দিতে অনেক দেরি করা।",
-      "💤 <b>Sleepyhead:</b> সারাদিন অলসতা করা আর প্রচুর ঘুমানো!"
+
+      "🫨 <b>Mood Swings:</b> হুটহাট করে মন খারাপ করে বসে থাকা।",
+
+      "🤭 <b>Anger:</b> ফালতু কারণে ছোট বাচ্চাদের মতো রাগ দেখায়।",
+
+      "😒 <b>Wrong Ans:</b> কোন প্রশ্ন করলেই বলে জানি না, তাক্কিন, এটা, সেটা!",
+
+      "😤 <b>Late Replies:</b> কাজ থাকলে লেট রিপ্লাই করে।",
+
+      "💤 <b>Sms Ignore:</b> ৫টা ম্যাসেজ দিলে ২টা ignore করে!"
+
     ];
 
+
+    /* =====================================
+       STATE
+    ====================================== */
+
     let hasSeenGood = false;
+
     let hasSeenBad = false;
 
-    const goodMusic = document.getElementById('goodMusic');
-    const badMusic = document.getElementById('badMusic');
+    let unlocked = false;
 
-    function stopAllMusic() {
-      goodMusic.pause();
-      goodMusic.currentTime = 0;
-      badMusic.pause();
-      badMusic.currentTime = 0;
+
+    /*
+      এই variable-এ রাখা হবে
+      বর্তমানে কোন গান চলছে।
+    */
+
+    let currentMusic = null;
+
+
+    /* =====================================
+       AUDIO
+    ====================================== */
+
+    const goodMusic =
+      document.getElementById("goodMusic");
+
+    const badMusic =
+      document.getElementById("badMusic");
+
+
+    /* =====================================
+       PLAY SELECTED MUSIC
+    ====================================== */
+
+    function playMusic(type) {
+
+      /*
+        যদি অন্য কোনো গান চলতে থাকে,
+        সেটা আগে বন্ধ হবে।
+      */
+
+      if (currentMusic) {
+
+        currentMusic.pause();
+
+        currentMusic.currentTime = 0;
+
+      }
+
+
+      /* =========================
+         FIRST OPTION
+      ========================= */
+
+      if (type === "good") {
+
+        goodMusic.currentTime = 0;
+
+        goodMusic.play()
+          .then(() => {
+
+            currentMusic = goodMusic;
+
+          })
+          .catch(error => {
+
+            console.log(
+              "p5.m4a play error:",
+              error
+            );
+
+            currentMusic = goodMusic;
+
+          });
+
+      }
+
+
+      /* =========================
+         SECOND OPTION
+      ========================= */
+
+      else if (type === "bad") {
+
+        badMusic.currentTime = 0;
+
+        badMusic.play()
+          .then(() => {
+
+            currentMusic = badMusic;
+
+          })
+          .catch(error => {
+
+            console.log(
+              "p3.mp2 play error:",
+              error
+            );
+
+            currentMusic = badMusic;
+
+          });
+
+      }
+
     }
 
-    function openBox(type) {
-      stopAllMusic();
 
-      const modal = document.getElementById('traitModal');
-      const icon = document.getElementById('modalIcon');
-      const title = document.getElementById('modalTitle');
-      const content = document.getElementById('modalContent');
+    /* =====================================
+       CLOSE BOX
+    ====================================== */
+
+    function closeBox() {
+
+      const modal =
+        document.getElementById(
+          "traitModal"
+        );
+
+
+      /*
+        Modal বন্ধ
+      */
+
+      modal.classList.add("hidden");
+
+
+      /*
+        শুধু বর্তমানে যে গানটা চলছে
+        সেটাই বন্ধ হবে।
+      */
+
+      if (currentMusic) {
+
+        currentMusic.pause();
+
+        currentMusic.currentTime = 0;
+
+        currentMusic = null;
+
+      }
+
+    }
+
+
+    /* =====================================
+       OPEN BOX
+    ====================================== */
+
+    function openBox(type) {
+
+      /*
+        Option অনুযায়ী গান শুরু
+      */
+
+      playMusic(type);
+
+
+      const modal =
+        document.getElementById(
+          "traitModal"
+        );
+
+
+      const icon =
+        document.getElementById(
+          "modalIcon"
+        );
+
+
+      const title =
+        document.getElementById(
+          "modalTitle"
+        );
+
+
+      const content =
+        document.getElementById(
+          "modalContent"
+        );
+
 
       content.innerHTML = "";
 
-      if (type === 'good') {
-        goodMusic.currentTime = 0;
-        goodMusic.play().catch(error => {
-          console.log("Good music playback blocked or file missing:", error);
-        });
+
+      /* =====================================
+         FIRST OPTION
+      ====================================== */
+
+      if (type === "good") {
 
         if (!hasSeenGood) {
+
           hasSeenGood = true;
-          document.getElementById('badgeGood').classList.remove('hidden');
+
+
+          document
+            .getElementById("badgeGood")
+            .classList
+            .remove("hidden");
+
+
           updateProgress();
+
         }
+
 
         icon.textContent = "💓";
-        title.textContent = "What I Love About U";
-        title.className = "font-love text-2xl text-emerald-600";
+
+
+        title.textContent =
+          "What I Love About U";
+
+
+        title.className =
+          "font-love text-2xl text-emerald-600";
+
+
         goodData.forEach(item => {
-          content.innerHTML += `<div class="p-3 bg-emerald-50/90 border border-emerald-200 rounded-xl leading-relaxed shadow-sm">${item}</div>`;
+
+          content.innerHTML += `
+
+            <div
+              class="p-3 bg-emerald-50/90 border border-emerald-200 rounded-xl leading-relaxed shadow-sm"
+            >
+              ${item}
+            </div>
+
+          `;
+
         });
 
-      } else {
-        badMusic.currentTime = 0;
-        badMusic.play().catch(error => {
-          console.log("Bad music playback blocked or file missing:", error);
-        });
+      }
+
+
+      /* =====================================
+         SECOND OPTION
+      ====================================== */
+
+      else if (type === "bad") {
 
         if (!hasSeenBad) {
+
           hasSeenBad = true;
-          document.getElementById('badgeBad').classList.add('hidden'); // Fix typo safety
-          document.getElementById('badgeBad').classList.remove('hidden');
+
+
+          document
+            .getElementById("badgeBad")
+            .classList
+            .remove("hidden");
+
+
           updateProgress();
+
         }
 
+
         icon.textContent = "🚩";
-        title.textContent = "Your Red Flag Collection";
-        title.className = "font-love text-2xl text-rose-600";
+
+
+        title.textContent =
+          "Your Red Flag Collection";
+
+
+        title.className =
+          "font-love text-2xl text-rose-600";
+
+
         badData.forEach(item => {
-          content.innerHTML += `<div class="p-3 bg-rose-50/90 border border-rose-200 rounded-xl leading-relaxed shadow-sm">${item}</div>`;
+
+          content.innerHTML += `
+
+            <div
+              class="p-3 bg-rose-50/90 border border-rose-200 rounded-xl leading-relaxed shadow-sm"
+            >
+              ${item}
+            </div>
+
+          `;
+
         });
+
       }
 
-      modal.classList.remove('hidden');
+
+      /*
+        Modal show
+      */
+
+      modal.classList.remove("hidden");
+
+
+      /*
+        Check whether both opened
+      */
+
+      checkUnlockNextButton();
+
     }
 
-    function closeBox() {
-      const modal = document.getElementById('traitModal');
-      stopAllMusic();
-      modal.classList.add('hidden');
-      checkUnlockNextButton();
-    }
+
+    /* =====================================
+       PROGRESS BAR
+    ====================================== */
 
     function updateProgress() {
+
       let progress = 0;
-      if (hasSeenGood) progress += 50;
-      if (hasSeenBad) progress += 50;
-      document.getElementById('progressBar').style.width = progress + '%';
+
+
+      if (hasSeenGood) {
+
+        progress += 50;
+
+      }
+
+
+      if (hasSeenBad) {
+
+        progress += 50;
+
+      }
+
+
+      document
+        .getElementById("progressBar")
+        .style.width =
+        progress + "%";
+
     }
+
+
+    /* =====================================
+       UNLOCK CARD
+    ====================================== */
 
     function checkUnlockNextButton() {
-      if (hasSeenGood && hasSeenBad) {
-        const btn = document.getElementById('continueBtn');
-        btn.classList.remove('hidden');
-        document.getElementById('instructionText').textContent = "দারুণ! ফাইনাল সারপ্রাইজ আনলক হয়ে গেছে 🎉";
-        
-        confetti({
-          particleCount: 120,
-          spread: 80,
-          origin: { y: 0.6 }
-        });
+
+      if (
+        hasSeenGood &&
+        hasSeenBad &&
+        !unlocked
+      ) {
+
+        unlocked = true;
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        const certificate =
+          document.getElementById(
+            "certificateCard"
+          );
+
+
+        certificate.classList.remove(
+          "hidden"
+        );
+
+
+        /*
+          Restart animation
+        */
+
+        certificate.style.animation =
+          "none";
+
+        certificate.offsetHeight;
+
+        certificate.style.animation =
+          "";
+
+
+        /* =========================
+           CONTINUE BUTTON
+        ========================= */
+
+        const continueBtn =
+          document.getElementById(
+            "continueBtn"
+          );
+
+
+        continueBtn.classList.remove(
+          "hidden"
+        );
+
+
+        /* =========================
+           TEXT
+        ========================= */
+
+        document
+          .getElementById(
+            "instructionText"
+          )
+          .textContent =
+          "দারুণ! ফাইনাল সারপ্রাইজ আনলক হয়ে গেছে 🎉";
+
+
+        /* =========================
+           CONFETTI
+        ========================= */
+
+        setTimeout(() => {
+
+          confetti({
+
+            particleCount: 150,
+
+            spread: 90,
+
+            startVelocity: 35,
+
+            origin: {
+              y: 0.65
+            }
+
+          });
+
+        }, 300);
+
       }
+
     }
+
+
+    /* =====================================
+       FLOATING HEARTS
+    ====================================== */
 
     function createFloatingHearts() {
+
       setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerHTML = ['❤️','💖','💕','💗','💘'][Math.floor(Math.random() * 5)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.fontSize = (18 + Math.random() * 24) + 'px';
-        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 8000);
+
+        const heart =
+          document.createElement(
+            "div"
+          );
+
+
+        heart.className =
+          "heart";
+
+
+        const hearts = [
+          "❤️",
+          "💖",
+          "💕",
+          "💗",
+          "💘"
+        ];
+
+
+        heart.innerHTML =
+          hearts[
+            Math.floor(
+              Math.random() *
+              hearts.length
+            )
+          ];
+
+
+        heart.style.left =
+          Math.random() * 100 +
+          "vw";
+
+
+        heart.style.fontSize =
+          (
+            18 +
+            Math.random() * 24
+          ) +
+          "px";
+
+
+        heart.style.animationDuration =
+          (
+            4 +
+            Math.random() * 4
+          ) +
+          "s";
+
+
+        document.body.appendChild(
+          heart
+        );
+
+
+        setTimeout(() => {
+
+          heart.remove();
+
+        }, 8000);
+
       }, 400);
+
     }
+
+
+    /* =====================================
+       SPARKLES
+    ====================================== */
 
     function createSparkles() {
-      for (let i = 0; i < 30; i++) {
-        const sp = document.createElement('div');
-        sp.className = 'sparkle';
-        sp.style.left = Math.random() * 100 + 'vw';
-        sp.style.top = Math.random() * 100 + 'vh';
-        sp.style.animationDelay = Math.random() * 3 + 's';
-        document.body.appendChild(sp);
+
+      for (
+        let i = 0;
+        i < 30;
+        i++
+      ) {
+
+        const sparkle =
+          document.createElement(
+            "div"
+          );
+
+
+        sparkle.className =
+          "sparkle";
+
+
+        sparkle.style.left =
+          Math.random() * 100 +
+          "vw";
+
+
+        sparkle.style.top =
+          Math.random() * 100 +
+          "vh";
+
+
+        sparkle.style.animationDelay =
+          Math.random() * 3 +
+          "s";
+
+
+        document.body.appendChild(
+          sparkle
+        );
+
       }
+
     }
 
+
+    /* =====================================
+       START EFFECTS
+    ====================================== */
+
     createFloatingHearts();
+
     createSparkles();
+
   </script>
+
 </body>
 </html>
