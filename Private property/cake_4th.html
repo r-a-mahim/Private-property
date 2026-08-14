@@ -383,33 +383,40 @@
       launchConfetti(80);
     }
 
-    function handleCakeClick() {
-      if (!candleBlown) {
-        return;
-      }
-      
-      if (!cakeCut) {
-        cakeCut = true;
+   function handleCakeClick() {
+  // মোমবাতি এখনো জ্বললে প্রথম ক্লিকেই নিভিয়ে দাও
+  if (!candleBlown) {
+    blowCandles();
+    return;
+  }
 
-        // কেক কাটার সাউন্ড এফেক্ট প্লে করা
-        const sliceSound = document.getElementById('sliceSound');
-        if(sliceSound) {
-          sliceSound.currentTime = 0;
-          sliceSound.play().catch(e => console.log(e));
-        }
+  // মোমবাতি নেভানোর পরের ক্লিকে কেক কাটবে
+  if (!cakeCut) {
+    cakeCut = true;
 
-        document.getElementById('cakeElement').classList.add('cut');
-        document.getElementById('knife').classList.remove('show');
-        document.getElementById('headingText').textContent = "Happy Birthday Moon 😘🎉";
-        document.getElementById('subText').textContent = "Your cake is cut! Time for the final surprise!";
-        
-        launchConfetti(120);
-
-        setTimeout(() => {
-          document.getElementById('finalPageBtn').classList.remove('hidden');
-        }, 800);
-      }
+    // কেক কাটার সাউন্ড
+    const sliceSound = document.getElementById('sliceSound');
+    if (sliceSound) {
+      sliceSound.currentTime = 0;
+      sliceSound.play().catch(e => console.log(e));
     }
+
+    document.getElementById('cakeElement').classList.add('cut');
+    document.getElementById('knife').classList.remove('show');
+
+    document.getElementById('headingText').textContent =
+      "Happy Birthday Moon 😘🎉";
+
+    document.getElementById('subText').textContent =
+      "Your cake is cut! Time for the final surprise!";
+
+    launchConfetti(120);
+
+    setTimeout(() => {
+      document.getElementById('finalPageBtn').classList.remove('hidden');
+    }, 800);
+  }
+}
 
     function createFloatingHearts() {
       setInterval(() => {
